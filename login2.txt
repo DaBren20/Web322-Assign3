@@ -1,0 +1,65 @@
+router.post('/login', function(req, res) {
+    
+        var email = req.body.email;
+        var password = req.body.password;
+        var loggedIn = [];
+
+       
+        userModel.findOne({email : email}, function(err, userModel) {
+            if(err) {
+                console.log(err);
+                return res.status(500).send();
+            }
+    
+            if(!userModel) {
+                console.log("fuck you");
+                return res.render("login", { errorMsg: "Missing email/password.", layout: false });
+                //return res.status(404).send();
+            }
+
+            bcrypt.compare(req.body.password, userModel.password, function(err, response) {
+                if(err) {
+                    console.log(err);
+                    return res.status(500).send();
+
+                }
+
+                if(response) {
+                    
+                    //res.redirect('/'); 
+
+                    console.log(response);
+                    console.log('success');
+                }
+                
+                else {
+                    console.log('fail');
+                    return res.status(404).send();
+                }
+            });
+
+            if(email === "" || password === "") {
+                return res.render("login", { errorMsg: "Missing email/password.", layout: false });
+            }
+
+            if(email === userModel.email && password === userModel.password) {
+                req.session.userModel = {
+                    email : userModel.email,
+                    password : userModel.password
+                };
+                res.redirect("/signedin");
+            }
+
+            else {
+                //res.redirect("signedin");
+                loggedIn.push(`Welcome ${userModel.firstName} ${userModel.lastName}`);
+                res.render('signedin', {
+                    title: "signed in",
+                    loggedIn: loggedIn
+                });
+                return;
+            }
+    
+            console.log(userModel);
+        });
+    });

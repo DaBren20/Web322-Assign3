@@ -1,0 +1,40 @@
+app.post('/login', (req,res) => {
+
+    const error1 = [];
+    const error2 = [];
+
+    if(req.body.email == "") {
+        error1.push("This field is required.");
+    }
+
+    if(req.body.password == "") {
+        error2.push("This field is required");
+    }
+
+    //This is if the user failed validation
+    if(error1.length > 0) {
+        res.render('login', { 
+            title: 'Login',
+            errorMessages: error1 
+        });
+        return;
+    }
+
+    //There are no errors
+    else {
+        res.redirect("/");
+    }
+
+    if(error2.length > 0) {
+        res.render('login', { 
+            title: 'Login',
+            errorMessages: error2
+        });
+        return;
+    }
+
+    //There are no errors
+    else {
+        res.redirect("/");
+    }
+});

@@ -1,0 +1,64 @@
+<head>
+    <script src="./js/items.js"></script>
+</head>
+
+<body>
+<div id="head">
+      <h1>UberGains</h1>
+      <p><b>Healthy eating for maximum gains!</b></p>
+      <img src="/images/logo2.png" alt="logo" id="logo" />
+</div>
+
+<div id="navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/meals">Meal Packages</a></li>
+          {{#unless user.firstName}}
+            <li><a href="/signup">Sign Up</a></li>
+          {{/unless}}
+        {{#if user.firstName}}
+            <li style="float:right"><a href="/logout">Log out</a></li><div class="loggedIn"><li style="float: right;">Welcome {{user.firstName}} {{user.lastName}}</li></div>
+          {{else}}
+            <li style="float:right"><a href="/login">Log in</a></li>
+          {{/if}}
+
+        </ul>
+</div>
+
+<table border="1" style="text-align: center;">
+        <thead>
+                <th>Meal Package Name</th>
+                <th>Meal Package Price</th>
+                <th>Meal Package Description</th>
+                <th>Meal Package Type</th>
+                <th>Top Package</th>
+        </thead>
+        <tbody>
+            {{#each data}}
+                <tr>
+                   <td>
+                        <a href="" class="meal-title">{{this.mealName}}</a>
+                   </td>
+                   <td>
+                       <span>{{this.price}}</span>  
+                   </td>
+                   <td>
+                        <span>{{this.description}}</span>
+                   </td>
+                   <td>
+                        <span>{{this.category}}</span>
+                   </td>
+                   <td>
+                    <button><a href="/update/{{this.id}}?method=PUT">Edit</a></button>
+                  </td>
+                </tr>
+                
+
+                {{else}}
+                    <td colspan="5">
+                        <p>No meals in the database</p>
+                    </td>
+
+                {{/each}}
+    </tbody>
+    </table>

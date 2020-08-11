@@ -1,0 +1,35 @@
+<head>
+    <script src="./js/items.js"></script>
+</head>
+
+<body>
+<div id="head">
+      <h1>UberGains</h1>
+      <p><b>Healthy eating for maximum gains!</b></p>
+      <img src="/images/logo2.png" alt="logo" id="logo" />
+</div>
+      <div id="navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/meals">Meal Packages</a></li>
+          {{#unless user.firstName}}
+            <li><a href="/signup">Sign Up</a></li>
+          {{/unless}}
+          
+          {{#if user.firstName}}
+            <li style="float:right"><a href="/logout">Log out</a></li><div class="loggedIn"><li style="float: right;">Welcome {{user.firstName}} {{user.lastName}}</li></div>
+          {{else}}
+            <li style="float:right"><a href="/login">Log in</a></li>
+          {{/if}}
+
+          <p>{{#each loggedIn}}
+            <div class="loggedIn">{{this}}</div>
+          {{/each}}</p></li>
+        </ul>
+      </div>
+            </br></br>
+            <h1>Here are the many food packages that we offer</h1></br></br>
+    <div id="items">
+
+    </div>
+</body>
